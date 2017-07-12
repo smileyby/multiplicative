@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>乘法表</title>
+  <style>
+    span {
+      width: 80px;
+      height: 30px;
+      display: inline-block;
+      border: 1px solid #eee;
+      text-align: center;
+      line-height: 30px;
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div id="content"></div>
+
+
+<script>
+
+  // 感觉还有很多地方可以改进，希望大家批评指正谢谢。
+  var html = '';
+  for(var i = 1;i < 10;i += 1){
+    html += '<div>';
+    for(var j = 1;j < i+1;j += 1){
+      html += '<span style="display:none;">'+i+'*'+j+'='+ (i*j) +'</span>';
+    };
+    html += '</div>';
+  };
+  document.getElementById('content').innerHTML = html;
+
+  function move(flag){
+    if(flag === 'down'){
+      start -= 1;
+      if(start <= 0){
+        start = 0;
+      }
+      span_obj[start].style.display = 'none';
+    }else{
+      span_obj[start].style.display = 'inline-block';
+      start += 1;
+      if(start >= 45){
+        start = 45;
+      }
+    };
+  };
+
+  var start = 0;
+  var this_time = new Date();
+  var span_obj = document.getElementsByTagName('span');
+  var length = span_obj.length;
+  var timer = setInterval(function(){
+    var result = ((new Date() - this_time) / 150);
+    if(result > 46){
+      if(result > 92){
+        clearInterval(timer);
+        for(var k = 0;k < length; k += 1){
+          span_obj[k].style.display = 'inline-block';
+        }
+      }else{
+        move('down');
+      };
+    }else{
+      move('up');
+    }
+  }, 150);
+</script>
+</body>
+</html>
